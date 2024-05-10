@@ -1,8 +1,10 @@
+import { store } from "@/redux/store";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { Provider } from "react-redux";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -41,7 +43,23 @@ export default function RootLayout() {
   return <RootLayoutNav />;
 }
 
+// function RootLayoutNav() {
+//   return (
+//     <Stack>
+//       <Stack.Screen name="index" options={{ headerShown: false }} />
+//     </Stack>
+//   );
+// }
+
 function RootLayoutNav() {
+  return (
+      <Provider store={store}>
+        <App />
+      </Provider>
+  );
+}
+
+function App() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
