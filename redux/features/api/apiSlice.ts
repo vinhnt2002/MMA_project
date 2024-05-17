@@ -5,13 +5,13 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl:
-      // process.env.NEXT_PUBLIC_SERVER_URI ||
-      "http://localhost:8000/api/v1/",
+      // process.env.SERVER_URI ||
+      "http://10.0.2.2:8000/api/v1/",
   }),
   endpoints: (builder) => ({
     refreshToken: builder.query({
       query: (data) => ({
-        url: "refresh",
+        url: "refresh-token",
         method: "GET",
         credentials: "include",
       }),
@@ -19,7 +19,7 @@ export const apiSlice = createApi({
 
     loadUser: builder.query({
       query: (data) => ({
-        url: "me",
+        url: "user-info",
         method: "GET",
         credentials: "include" as const,
       }),

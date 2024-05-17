@@ -21,4 +21,4 @@ const initializeApp = async () => {
 
 
 // unlock to run 
-// initializeApp()
+initializeApp()
