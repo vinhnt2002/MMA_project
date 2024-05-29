@@ -1,21 +1,30 @@
 import CustomButton from "@/components/custom-button";
 import FormField from "@/components/form-field";
 import { images } from "@/constants";
-import { Link } from "expo-router";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, Image, ScrollView, Text, View } from "react-native";
+import { Alert, Dimensions, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
+  const [register, { isSuccess, isError, error }] = useRegisterMutation();
+
   const [isSubmitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleSubmit = async () => {
-    // todo
+    try {
+      await register({ email, name, password });
+
+      Alert.alert("Success", "User register in successfully");
+
+      router.replace("/sign-in");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -37,22 +46,22 @@ const SignUp = () => {
           </Text>
           <FormField
             title="Username"
-            value={form.username}
-            handleChangeText={(e) => setForm({ ...form, username: e })}
+            value={name}
+            handleChangeText={setName}
             otherStyles="mt-10"
             placeholder="Nhập tên người dùng"
           />
           <FormField
             title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            value={email}
+            handleChangeText={setEmail}
             otherStyles="mt-7"
             placeholder="Nhập email"
           />
           <FormField
             title="Password"
-            value={form.password}
-            handleChangeText={(e) => setForm({ ...form, password: e })}
+            value={password}
+            handleChangeText={setPassword}
             otherStyles="mt-7"
             placeholder="Nhập password"
           />

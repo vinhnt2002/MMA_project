@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
 import { useCreatePostsMutation, useGetAllPostsQuery } from "@/redux/features/posts/postApi";
+import { Redirect, router } from "expo-router";
 
 const TextPage = () => {
   const [email, setEmail] = useState("");
@@ -12,11 +13,14 @@ const TextPage = () => {
 
   const [ createPosts , {isLoading:isLoadingPosts, isError: createPostsError} ] = useCreatePostsMutation()
 
+
   const handleLogin = async () => {
     try {
      await login({ email, password });
-
-      console.log("oke");
+     Alert.alert("Success", "User signed in successfully");
+     router.replace("/home")
+     console.log("oke");
+      
     } catch (error) {
       console.log(error);
     }

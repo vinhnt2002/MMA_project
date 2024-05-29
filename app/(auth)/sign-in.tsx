@@ -1,20 +1,29 @@
 import CustomButton from "@/components/custom-button";
 import FormField from "@/components/form-field";
 import { images } from "@/constants";
-import { Link } from "expo-router";
+import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Dimensions, Image, ScrollView, Text, View } from "react-native";
+import { Alert, Dimensions, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignIn = () => {
   const [isSubmitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [login, { isSuccess, isError, error }] = useLoginMutation();
 
   const handleSubmit = async () => {
     // todo
+    try {
+      await login({ email, password });
+      Alert.alert("Success", "User signed in successfully");
+
+      router.replace("/home");
+     
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -36,15 +45,15 @@ const SignIn = () => {
           </Text>
           <FormField
             title="Email"
-            value={form.email}
-            handleChangeText={(e) => setForm({ ...form, email: e })}
+            value={email}
+            handleChangeText={setEmail}
             otherStyles="mt-7"
             placeholder="Nhập email"
           />
           <FormField
             title="Password"
-            value={form.password}
-            handleChangeText={(e) => setForm({ ...form, password: e })}
+            value={password}
+            handleChangeText={setPassword}
             otherStyles="mt-7"
             placeholder="Nhập password"
           />
