@@ -2,6 +2,7 @@ import CustomButton from "@/components/custom-button";
 import FormField from "@/components/form-field";
 import { images } from "@/constants";
 import { useLoginMutation } from "@/redux/features/auth/authApi";
+import { handleError } from "@/utils/handle-error";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Dimensions, Image, ScrollView, Text, View } from "react-native";
@@ -11,18 +12,21 @@ const SignIn = () => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [login, { isSuccess, isError, error }] = useLoginMutation();
+  const [login, { isSuccess }] = useLoginMutation();
 
   const handleSubmit = async () => {
-    // todo
+    setSubmitting(true);
     try {
-      await login({ email, password });
-      Alert.alert("Success", "User signed in successfully");
+      await login({ email, password }).unwrap();
 
-      router.replace("/home");
-     
-    } catch (error) {
-      console.log(error);
+      if (isSuccess) {
+        Alert.alert("Success", "Đăng nhập thành công");
+        router.replace("/home");
+      }
+    } catch (error: any) {
+      Alert.alert("Error", handleError(error));
+    } finally {
+      setSubmitting(false);
     }
   };
 

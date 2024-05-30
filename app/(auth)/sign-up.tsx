@@ -2,13 +2,14 @@ import CustomButton from "@/components/custom-button";
 import FormField from "@/components/form-field";
 import { images } from "@/constants";
 import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import { handleError } from "@/utils/handle-error";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Dimensions, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SignUp = () => {
-  const [register, { isSuccess, isError, error }] = useRegisterMutation();
+  const [register, { isSuccess }] = useRegisterMutation();
 
   const [isSubmitting, setSubmitting] = useState(false);
   const [email, setEmail] = useState("");
@@ -16,14 +17,19 @@ const SignUp = () => {
   const [name, setName] = useState("");
 
   const handleSubmit = async () => {
+    setSubmitting(true);
     try {
-      await register({ email, name, password });
+      await register({ email, name, password }).unwrap();
 
-      Alert.alert("Success", "User register in successfully");
+      if (isSuccess) {
+        Alert.alert("Success", "Đăng kí thành công");
 
-      router.replace("/sign-in");
+        router.replace("/sign-in");
+      }
     } catch (error) {
-      console.log(error);
+      Alert.alert("Error", handleError(error));
+    } finally {
+      setSubmitting(false);
     }
   };
 
