@@ -2,12 +2,12 @@ import React from "react";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const Wallet = () => {
+const Create = () => {
   return (
     <SafeAreaView>
-      <Text>Wallet page</Text>
+      <Text>Create posts</Text>
     </SafeAreaView>
   );
 };
 
-export default Wallet;
+export default Create;

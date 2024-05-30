@@ -9,9 +9,10 @@ export const postApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // get posts
     getAllPosts: builder.query({
-      query: ({}) => ({
+      query: (args) => ({
         url: "posts",
         method: "GET",
+        params:args,
         credentials: "include" as const,
       }),
     }),

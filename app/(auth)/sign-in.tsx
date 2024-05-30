@@ -19,10 +19,8 @@ const SignIn = () => {
     try {
       await login({ email, password }).unwrap();
 
-      if (isSuccess) {
-        Alert.alert("Success", "Đăng nhập thành công");
-        router.replace("/home");
-      }
+      Alert.alert("Success", "Đăng nhập thành công");
+      router.replace("/home");
     } catch (error: any) {
       Alert.alert("Error", handleError(error));
     } finally {

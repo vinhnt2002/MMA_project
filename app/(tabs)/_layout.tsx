@@ -72,30 +72,30 @@ const TabsLayout = () => {
             }}
           />
           <Tabs.Screen
-            name="wallet"
-            options={{
-              title: "Wallet",
-              headerShown: false,
-              tabBarIcon: ({ color, focused }) => (
-                <TabsIcon
-                  icon={icons.bookmark}
-                  color={color}
-                  name="Wallet"
-                  focused={focused}
-                />
-              ),
-            }}
-          />
-          <Tabs.Screen
             name="order"
             options={{
               title: "Order",
               headerShown: false,
               tabBarIcon: ({ color, focused }) => (
                 <TabsIcon
-                  icon={icons.plus}
+                  icon={icons.bookmark}
                   color={color}
                   name="Order"
+                  focused={focused}
+                />
+              ),
+            }}
+          />
+          <Tabs.Screen
+            name="create"
+            options={{
+              title: "Create",
+              headerShown: false,
+              tabBarIcon: ({ color, focused }) => (
+                <TabsIcon
+                  icon={icons.plus}
+                  color={color}
+                  name="Create"
                   focused={focused}
                 />
               ),
