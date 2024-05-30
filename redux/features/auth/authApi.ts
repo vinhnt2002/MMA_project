@@ -4,8 +4,6 @@ import { userRegister, userLoggedIn, userLoggedOut } from "./authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    //regiter
-
     register: builder.mutation({
       query: ({ email, name, password }) => ({
         url: "register",
@@ -43,7 +41,26 @@ export const authApi = apiSlice.injectEndpoints({
         }
       },
     }),
+
+    logOut: builder.query({
+      query: () => ({
+        url: "logout",
+        method: "GET",
+        credentials: "include" as const
+      }),
+      async onQueryStarted(arg, {queryFulfilled, dispatch}){
+        try {
+          dispatch(
+            userLoggedOut()
+          )
+        } catch (error:any) {
+          console.log(error)
+        }
+      }
+
+      
+    })
   }),
 });
 
-export const { useLoginMutation, useRegisterMutation } = authApi;
+export const { useLoginMutation, useRegisterMutation, useLogOutQuery } = authApi;
